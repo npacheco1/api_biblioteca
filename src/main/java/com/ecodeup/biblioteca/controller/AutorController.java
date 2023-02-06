@@ -1,5 +1,4 @@
 package com.ecodeup.biblioteca.controller;
-
 import com.ecodeup.biblioteca.dto.AutorDTO;
 import com.ecodeup.biblioteca.service.AutorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -28,8 +29,14 @@ public class AutorController {
         return new ResponseEntity<>(autorService.save(autorDTO) , HttpStatus.CREATED);
     }
     @GetMapping
-    public List<AutorDTO> findAll(){
-        return autorService.findAll();
+    public ResponseEntity<List<AutorDTO>> findAll(){
+        return new ResponseEntity<>(autorService.findAll(), HttpStatus.OK);
+
+
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<AutorDTO> findById(@PathVariable Integer id){
+        return new ResponseEntity<>(autorService.findById(id), HttpStatus.OK);
     }
 
 }
