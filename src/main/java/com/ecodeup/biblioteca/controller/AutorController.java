@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
+
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,7 +38,24 @@ public class AutorController {
     }
     @GetMapping("/{id}")
     public ResponseEntity<AutorDTO> findById(@PathVariable Integer id){
-        return new ResponseEntity<>(autorService.findById(id), HttpStatus.OK);
+        try {
+            return new ResponseEntity<>(autorService.findById(id), HttpStatus.OK);
+
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        }
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<HttpStatus> deleteById (@PathVariable Integer id){
+        try {
+            autorService.deleteById(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        }
     }
 
 }
